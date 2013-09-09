@@ -1,0 +1,107 @@
+LIBS:
+shapelezz scala
+scalaz
+scalab
+acca 
+lift
+spray - rest (spray twirl - templates)
+play - rest easy
+iterati - IO
+spire
+
+--------------------------
+
+var - like java variable, can have type, copilator can guess type
+val - like final in java / immutable
+lazy val = lazy loading
+Nil - empty list
+
+val, var i def - everything is object. there is no primitives
+Mixin "trait" s -  like interfaces, can have implementation of methods like abstrac tclasses, dont have constructors - easy composition, you can add it with keyword "with"
+apply - returns value of key or default. 
+
+None - safe null 
+
+if/else - quite like in Java but returns value, same type 
+
+while - returns Unit
+do/while - check on the end, returns Unita
+
+for/yield - like for each in Javie
+  for(s<- List("Hello",)) fore every "s" assign, can be for two iterators and break with "if"
+  for/yield - we can delete elements without generating lists, we can add this kind of collection
+  
+match/case - better Switch :
+  - you dont nead "break"s 
+  - you can match after classes, lists, regexes, conditionals 
+  - "_" match's everything
+  something match{
+    case pat1 => b.peel
+  }
+  
+  => implication
+  <- assigment
+  [something] like <something> in java, parametrizing
+  _ instead of parameter x=>x , default variable
+  
+subtype - kind of extend
+Any - like Object in Java
+  - AnyVal - Double, Flat itp
+  - AnyRef - ScalaObject, Scala Classes, JavaClasses, Null
+  - Nothing - is type of everything, used mostly with exception
+
+----------
+
+functions of higher order
+
+trait X[A] {def map[B](f: A=> B): X[B]}
+example: 
+(1 to 10) map { x=> x*2} - calculates to vector (2,4 ... 20)
+
+trait X [A]{def filter()}
+
+------------
+
+monad - avoiding nulls
+sealed -  complier will guess type
+sealed trait Option - type of Monad
+Option - also iterable 
+-------------
+Nondetermism
+  some for with yield's, instead we can use flatmap
+-----------
+==================================
+Collections:
+  - generic
+  - Immutable & Mutable (first recomended)
+
+val ys = List(1,2,3)
+val xs: Seq[Int]=ys
+
+ys filter(_%2 ==0)
+
+Traversable - parent of collections, next is iterable, Seq, Map & Set
+
+Parallel on every process
+
+========
+Actors model - have state & behaviour , communication by messaging
+dont need synchronization, threads, number of threads are as much as many cores we have
+
+- actors can create actors
+- send message by exclamation mark: hello ! "world"
+- count, stats, get stats - three methods for messages
+- you can pass along message: actorB tell(A, actorC) 
+- Ask, actor can ask "?" instead of "!"
+- PipeTo - forward
+- MailBox - size of mail box, can be infinity
+- you can have it more than threads 
+- no blocking threads - high scalability
+- no sharing threads
+
+
+
+
+
+
+

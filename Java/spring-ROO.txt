@@ -1,0 +1,93 @@
+http://www.springbyexample.org/pdf/SpringByExample.pdf
+http://www.habuma.com/spring/sia-sdug.pdf
+http://jdn.pl/files/springframework-dla-praktykow.pdf
+
+
+
+spring ROO
+persistence setup --provider HIBERNATE --database MYSQL
+entity jpa --class ~.domain.Article
+field string --fieldName title --notNull --sizeMax 200
+field string --fieldName author --notNull --sizeMax 200
+web jsf setup --implementation ORACLE_MOJARRA --theme EGGPLANT
+web jsf all --package ~.jsf
+
+
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log opened at 2012-08-27 15:46:03
+project --topLevelPackage pl.nexio --projectName katalog2 --java 6
+--packaging JAR
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log closed at 2012-08-27 15:46:06
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log opened at 2012-08-27 15:46:20
+persistence setup --provider HIBERNATE --database POSTGRES
+entity jpa --class ~.model.Person
+web jsf setup --implementation ORACLE_MOJARRA --theme EGGPLANT
+web jsf all --package ~.beans
+entity jpa --class Item
+field string --fieldName name --notNull
+web jsf all --package ~.beans
+field set --type ~.model.Person --class ~.beans.Item --fieldName persons
+web jsf all --package ~.beans
+entity jpa --class ~.beans.Version
+field reference --type ~.beans.Version --fieldName version --class ~.beans.Item
+field number --fieldName numer --class ~.beans.Version --type java.lang.Integer
+web jsf all --package ~.beans
+
+http://static.springsource.org/spring-roo/reference/html/base-dbre.html
+
+project --topLevelPackage pl.nexio.prodCatalogue
+jpa setup --database POSTGRES --provider HIBERNATE
+database properties set --key database.password --value 123456
+database properties set --key database.username --value postgres
+database properties set --key database.url --value jdbc:postgresql://localhost:5432/PROD_CAT
+
+entity jpa --class ~.DAO.hibernate.Item
+field string --fieldName name --notNull --sizeMax  200
+
+entity jpa --class ~.DAO.hibernate.ItemVersions
+field date --fieldName timePeriod 
+field string --fieldName description --sizeMax 300
+field string --fieldName versionNo --notNull --sizeMax 100
+field string --fieldName subName --notNull --sizeMax 200
+
+entity jpa --class ~.DAO.hibernate.ItemRelations
+
+
+entity jpa --class ~.DAO.hibernate.ItemType
+field string --fieldName name --notNull --sizeMax 200
+field string --fieldName description --sizeMax 300
+
+entity jpa --class ~.DAO.hibernate.BaseFunctions
+field string --fieldName name --notNull --sizeMax  200
+field string --fieldName description --sizeMax 300
+field string --fieldName fun --sizeMax  200
+
+entity jpa --class ~.DAO.hibernate.DefFunctions
+field string --fieldName name --notNull --sizeMax  200
+field string --fieldName description --sizeMax 300
+field string --fieldName fun --sizeMax  200
+
+entity jpa --class ~.DAO.hibernate.ItemProperties
+field other --fieldName value --notNull
+
+entity jpa --class ~.DAO.hibernate.ItemPropertyTypes
+field string --fieldName name --notNull --sizeMax  200
+
+entity jpa --class ~.DAO.hibernate.ItemPropertyValType
+field string --fieldName description --sizeMax 300
+field string --fieldName type --sizeMax 100
+
+//Relations
+
+field reference --class ~.DAO.hibernate.Item --fieldName typeId --type ~.DAO.hibernate.ItemProperties
+
+field reference --class ~.DAO.hibernate.ItemRelations --fieldName parent_id --type ~.DAO.hibernate.Item
+field reference --class ~.DAO.hibernate.ItemRelations --fieldName child_id --type ~.DAO.hibernate.Item
+
+field reference --class ~.DAO.hibernate.Versions --fieldName item_id --type ~.DAO.hibernate.Item
+
+field reference --class ~.DAO.hibernate.ItemProperties --fieldName item_version_id --type ~.DAO.hibernate.ItemVersions
+
+field reference --class ~.DAO.hibernate.ItemPropertyTypes --fieldName item_prop_type_id --type ~.DAO.hibernate.ItemPropertyValType
+
+field reference --class ~.DAO.hibernate.ItemProperties --fieldName item_prop_type_id --type ~.DAO.hibernate.ItemPropertyTypes 
+

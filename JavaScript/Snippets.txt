@@ -1,0 +1,15 @@
+//Include lodash
+
+var lodash = document.createElement('script');
+lodash.src = "http://cdnjs.cloudflare.com/ajax/libs/lodash.js/1.2.1/lodash.compat.min.js";
+document.getElementsByTagName('head')[0].appendChild(lodash);
+
+//includejquery
+var jq = document.createElement('script');
+jq.src = "http://code.jquery.com/jquery-latest.min.js";
+document.getElementsByTagName('head')[0].appendChild(jq);
+jQuery.noConflict();
+
+//angular get service
+var injector = angular.injector(['ng', 'serviceName']);
+var name = injector.get('ServiceName');

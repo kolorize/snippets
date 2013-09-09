@@ -1,0 +1,73 @@
+Javascript good Parts Abstract
+
+Most programming languages have its good parts and bad parts.
+This book focus on good parts of Javascript including: functions, loose typing, 
+dynamic objects, and an expressive object literal notation.
+
+Book introducing belows topics:
+- language grammar using simple diagrams
+- Objects that :
+	1 literal pair of curly braices surronding zero or more name:value pairs
+	2 is linked to prototype from which inherit properties
+	3 have type that could be check by "typeof"
+	4 have properties that we could enumerate threw and delete selected
+- Functions:
+	1. are objects that are linked to Function.proptype (that links to Object.protype)
+	2. could return nested function object that have link to outer context (closure)
+	3. have apply(context, arrayOfParams) invocation pattern
+	4. could have bonus parameters for function that goes to "arguments" array
+	5. have return keyword that ends function and returns the value if not undefined is returned
+	6. have Exceptions handling with throw, try and catch
+	7. could have Augmenting Types to extend baasic functionality
+	8. could use Recursion
+	9. have Scope - variables visible only in current function body. 
+		Tip: best to declare variables used in a function at the top of the function body
+	10. have Closures - accessing variables from inner function
+	11. have Calbacks - passing function into other function
+	12. could use closure to make modules
+	13. could have Cascade - Preparing methods that returns this
+	14. could have Curry - new function by combining a function and an argument by augmenting Function Method
+	15. could have Memoization - Functions using remembers the results of previous operations
+	
+- Inheritance and its prototypal nature:
+	1. making it using pseudoclassical pattern, sort of object-oriented
+	2. Object Specifers to name parameters of function
+	3. Prototypal way using Object.create(newObject)
+	4. Functional - using functional constructor patern
+	5. Composoing objects from parts 
+- Arrays
+	1. Notation
+	2. Basic functions and fields: length, delete, enumeration, dim
+	3. Specifics : difference with Object, Dimensions (dim method)
+- Regular Expressions 
+	1. functions that works with RegEx: regexp.exec, regexp.test,
+		string.match, string.replace, string.search, and string.split
+	2. Basics of RegEx syntax and railroad diagram of matching them: ^ | * ? $ + 
+	3. creating RegEx objects using /expression/flag (g,i or m) or new RegExp("'expression'", 'flag'); syntax
+	4. RegEx special characters and grouping: \ / [ ] ( ) { } ? + * | . ^ $
+	5. Escaping RegEx in javascript using backslash: \f \n \w \d \D \S
+	6. Regexp Class - convenient way of specifying one of a set of characters
+- Standard javascript methods description:
+	1. Array: array.concat(item…), array.join(separator), array.pop( ), array.push(item…), array.reverse( ), array.shift( ), 
+		array.slice(start,end), array.sort(comparefn), array.splice(start, deleteCount,item…),array.unshift(item…)
+	2. Function: function.apply(thisArg, argArray)
+	3. Number: number.toExponential(fractionDigits), number.toFixed(fractionDigits), number.toPrecision(precision), number.toString(radix)
+	4. Object: object.hasOwnProperty(name)
+	5. RegExp : regexp.exec(string), regexp.test(string)
+	6. String : string.charAt(pos), string.charCodeAt(pos), string.concat(string…), string.indexOf(searchString, position), string.lastIndexOf(searchString, position),
+		string.localeCompare(that), string.match(regexp), string.replace(searchValue,replaceValue), string.search(regexp), string.slice(start,end), string.split(separator,limit),
+		string.substring(start,end), string.toLocaleLowerCase( ), string.toLocaleUpperCase( ), string.toLowerCase( ), string.toUpperCase( ), String.fromCharCode(char…)
+- Good style tips
+	1. use brackets when its needed
+	2. use comments when its reasonable 
+	3. use a single global variable to contain an application or library
+	
+Appendix contains bad parts of language including: 
+- dependence on Global Variables
+- missing block scope, but having block syntax
+- Semicolon Insertion - mechanism that tries to correct faulty programs by inserting semicolon
+- Reserved Words that are not used in language
+- problems with unicode (covering 65k from 1 million characters)
+- Objects that are never empty because they have prototype members
+- Floating Point (0.1 + 0.2 not equals 0.3)
+- parseInt unexpected working (parseInt("08") = 0)

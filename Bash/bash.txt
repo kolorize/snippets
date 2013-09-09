@@ -1,0 +1,37 @@
+ #!bash - start of script
+ ls - dir
+ cd \ - root
+ ./ execute script0
+ pwd - actual directory
+ clear - cls
+ tail -f log_general_mysql - tail
+ 
+ ps aux - procesy
+ ps aux | grep java - wypisuje wszystkie procesy javove
+ ps aux | grep jetty wszsysktie jetty
+ killall mvn - zabija wszystkie mvn-owe procesy
+ kill 939 - kills process 939 
+ kill -9 939 - kills 939 process forced
+
+ echo 'show schemas;' | mysql -uUSER -pPASSWORD -hSOME_mysql_server
+
+ & - not wait for program to finish and go to next command
+ program >  newfile.txt - creates file newfile and add output from program to it (>> just adds when file exists)
+
+scp ~/Documents/file.tmp serverhost:/directory/directory
+
+ctrl+z - pause job, next "bg" (background) to continue
+
+ssh-keygen - Generating public/private rsa key pair. then copy by scp to host
+
+-------------
+ #Ruby 1.9.3
+brew install rbenv
+brew install ruby-build
+echo ' if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi' >> .bash_profile
+#new window in terminal
+rbenv install -l #lista installer
+rbenv install 1.9.3-p194 #installfor env - rubby version
+rbenv global 1.9.3-p194 #configures rubby version
+gem install mysql #ruby plugin 
+gem install colorize #plugin colorize syntax

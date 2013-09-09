@@ -1,0 +1,54 @@
+b.scores.save({a:99,b:22});
+for(i=0; i<10; i++) { db.scores.save({a: i, exam: 5}) };
+
+a == 2:
+  db.scores.find({a: 2}); 
+
+ //a > 15
+  //db.scores.find({a: {'$gt': 15}}); 
+  //$lt  - '<',   $lte - '<=', 
+  //$gte - '>=',  $ne  - '!='
+  //$in - 'is in array',  $nin - '! in array'
+
+db.scores.find({a: {'$in': [2, 3, 4]}}); 
+db.scores.find({a: {'$gte': 2, '$lte': 4}}); 
+db.users.save({name: 'Johnny', languages: ['ruby', 'c']}); 
+db.users.save({name: 'Sue', languages: ['scala', 'lisp']}); 
+db.users.find() //Make sure they were saved by called 
+db.users.update({name: 'Johnny'}, {name: 'Cash', languages: ['english']}); 
+db.users.update({name: 'Cash'}, {'$set': {'age': 50} });  //zmienia
+db.users.update({name: 'Sue'}, {'$pull': {'languages': 'scala'} }); //dodaje
+db.users.update({name: 'Sue'}, {'$push': {'languages': 'ruby'} }); //usuwa
+db.users.remove({name: 'Sue'});
+db.scores.remove(); //To delete everything from a collection:
+
+db.grades.find({"type": "exam", score: {$gte: 65} }).sort( { "score" : 1 } ).limit(1)
+db.students.ensureIndex({class:1, student_name:1})
+
+db.grades.find({ "type" : "homework" }).sort({ "student_id" : 1, "score" : 1 }).forEach(function(student) { if (studentids !== student.student_id) { //print(student.student_id, student.score, studentids, student._id); db.grades.remove({"_id":student._id}) } studentids = student.student_id });
+
+student - { "_id":1 , "name": something, "teachers" : [0, 1] }
+db.students.ensureIndex({'teachers'}) //adding multikeys
+
+
+
+// HW2
+db.students.find().sort({"student_id" : 1}).forEach(function(student) { 
+		lowestScore = 99999;
+	student.scores.forEach(function(score){
+		if(score.type=='homework'){
+			if(score.score<lowestScore){
+				lowestScore = score.score;
+			}
+		}
+	 }
+	)
+	print(lowestScore);
+	db.students.update({'_id': student._id}, {'$pull': { 'scores': { 'type': 'homework', 'score': lowestScore } } })
+ }
+
+ );
+
+
+
+

@@ -1,0 +1,27 @@
+Core concepts:
+model view controller forced
+View components:
+- border - has North, south, West, center region - typical web design, divided in to 5 pieces
+- anchor - two params height and width could be in percents.
+- absolut - just starting point x,y like desktop
+- card tabs or wizard - just one child at the time
+- column - will shrink
+-fit - will fit to container
+- table - not used to much is more like gród
+//flex : 1 - show much will expand comparing to other flex configs
+tips:
+-panel nesting - avoid
+-minimal layout
+- could used docked items top tbar and bottom bbar instead of panel nesting
+-----
+Containers:
+- mostly we would use forms for ajax
+--------
+data packages:
+store - like empty bag, contains models
+model - object entity: key : value pairs. 
+saving:  use store, use model or direct ajax save. store could be sync proxy url using ajax
+
+
+
+

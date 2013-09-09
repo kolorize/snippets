@@ -1,0 +1,227 @@
+/**
+ * Graphing 2D Equations
+ * by Daniel Shiffman.
+ *
+ * Graphics the following equation:
+ * sin(n*cos(r) + 5*theta)
+ * where n is a function of horizontal mouse location.  
+ */
+ float n = (1 * 10.0) / width;
+void setup() {
+  size(1024,800);
+  frameRate(30);
+}
+
+void draw() {
+  loadPixels();
+  n=n+1;
+	if (n > 1000) {
+	n = 10;
+  }
+ 
+	float w = 16.0;     	// 2D space width
+	float h = 16.0;     	// 2D space height
+	float dx = w / width;	// Increment x this amount per pixel
+	float dy = h / height;   // Increment y this amount per pixel
+	float x = -w/2;      	// Start x at -1 * width / 2
+	for (int i = 0; i < width; i++) {
+  	float y = -h/2;    	// Start y at -1 * height / 2
+  	for (int j = 0; j < height; j++) {
+    	float r = (n/100)*sqrt((x*x) + (y*y))+n;	// Convert cartesian to polar
+    	float theta = n*atan2(y,x);     	// Convert cartesian to polar
+    	// Compute 2D polar coordinate function
+   	 
+    	float val = cos(n*cos(r) + 5 * theta);       	// Results in a value between -1 and 1
+    	//float val = cos(r);                        	// Another simple function
+    	//float val = sin(theta);                    	// Another simple function
+    	// Map resulting vale to grayscale value
+    	pixels[i+j*width] = color((val + 1.0) * 255.0/2.0); 	// Scale to between 0 and 255
+    	y += dy;            	// Increment y
+  	}
+  	x += dx;              	// Increment x
+	}
+    
+	updatePixels();
+ 
+}
+
+
+
+MY SOUND JAVA!
+Libs: Core.jar, ant.jar, minim.jar, minim-spi, jsminim, tritonus_share, mp3spi1.9.4, jl1.0., trtonus_aos, opengl, gluegen-rt, jogl .
+
+
+package aud2;
+
+import processing.core.PApplet;
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import javax.media.opengl.*;
+
+public class Aud21 extends PApplet {
+
+	private static final long serialVersionUID = 1L;
+	private Aud21 x = this;
+	AudioPlayer player;
+	Minim minim;
+	FFT fft;
+	String windowName;
+	BeatDetect beat;
+	BeatListener bl;
+	float kickSize, snareSize, hatSize;
+	private  int x1 =0;
+	private int y1 = 0;
+
+	public Aud21() {
+	}
+
+	public static void main(String[] args) {
+    	// must match the name of your class ie "letsp5.Main" = packageName.className
+    	PApplet.main(new String[]{"aud2.Aud21"});
+	}
+
+	@Override
+	public void setup() {
+
+    	int[] coords = {
+        	40, 40, 80, 60, 100, 100, 60, 120, 50, 150
+    	};
+    	int i;
+    	String path = "C:\\Documents and Settings\\groove.mp3";
+
+    	x.frameRate(20);
+    	x.minim = new Minim(this);
+    	x.size(512, 300, P2D);
+    	player = minim.loadFile(path, 2048);
+    	// play the file
+    	player.loop();
+    	fft = new FFT(player.bufferSize(), player.sampleRate());
+    	textFont(createFont("SanSerif", 12));
+    	windowName = "None";
+
+    	//beat recognize
+    	beat = new BeatDetect(player.bufferSize(), player.sampleRate());
+    	beat.setSensitivity(300);
+    	kickSize = snareSize = hatSize = 16;
+    	// make a new beat listener, so that we won't miss any buffers for the analysis
+    	bl = new BeatListener(beat, player);
+    	textFont(createFont("SanSerif", 16));
+    	textAlign(CENTER);
+
+
+	}
+
+	@Override
+	public void draw() {
+
+    	background(0);
+    	stroke(255);
+    	// perform a forward FFT on the samples in jingle's left buffer
+    	// note that if jingle were a MONO file, this would be the same as using jingle.right or jingle.left
+    	fft.forward(player.mix);
+    	for (int i = 0; i < fft.specSize(); i++) {
+        	// draw the line for frequency band i, scaling it by 4 so we can see it a bit better
+        	line(i, height, i, height - fft.getBand(i) * 4);
+        	//rect(i, height, i+5, height - fft.getBand(i) * 4);
+        	//ellipse(fft.getBand(i) /2, fft.getBand(i) * 4, fft.getBand(i) * 4, fft.getBand(i) * 4);
+        	changeXY();
+        	arc(x1, y1, 60, 60, PI/2, PI);
+    	}
+   	 
+   	 
+   	 
+    	fill(255);
+   	 
+   	 
+   	 
+    	// keep us informed about the window being used
+    	x.text("The window being used is: " + windowName, 5, 20);
+
+    	if (beat.isKick()) {
+        	kickSize = 32;
+    	}
+    	if (beat.isSnare()) {
+        	snareSize = 32;
+    	}
+    	if (beat.isHat()) {
+        	hatSize = 32;
+    	}
+    	textSize(kickSize);
+    	text("KICK", width / 4, height / 2);
+    	textSize(snareSize);
+    	text("SNARE", width / 2, height / 2);
+    	textSize(hatSize);
+    	text("HAT", 3 * width / 4, height / 2);
+    	x.kickSize = (float) (x.kickSize * 0.95);
+    	x.kickSize = constrain(x.kickSize, 16, 32);
+    	snareSize = (float) (snareSize * 0.95);
+    	snareSize = constrain(snareSize, 16, 32);
+    	hatSize = (float) (hatSize * 0.95);
+    	hatSize = constrain(hatSize, 16, 32);
+
+	}
+
+	@Override
+	public void stop() {
+    	// always close Minim audio classes when you are finished with them
+    	player.close();
+    	// always stop Minim before exiting
+    	minim.stop();
+    	// this closes the sketch
+    	super.stop();
+	}
+
+//	@Override
+//	public void mouseDragged() {
+//    	int cos = 0xFF8000;
+//    	//line(mouseX, mouseY, pmouseX, pmouseX);
+//    	//   	rect(mouseX, mouseY, pmouseX, pmouseY);
+//    	//        	stroke(255);           	// sets the stroke color to white
+//    	// 	stroke(mouseX, mouseY, pmouseX); 	// identical to the line above
+//    	// 	stroke(255, 128, 0);   	// bright orange (red 255, green 128, blue 0)
+//    	// 	stroke(cos);       	// bright orange as a web color
+//    	// 	stroke(255, 128, 0, 128);  // bright orange with 50% transparency
+//    	if (x.mousePressed) {
+//        	x.beginShape();
+//        	x.color(0);
+//        	x.vertex(pmouseX, pmouseX); // first point
+//        	x.line(mouseX, mouseY, pmouseX, pmouseY);
+//        	x.bezierVertex(mouseX, mouseY, pmouseX, pmouseY, pmouseX, pmouseY);
+//        	x.emissive(mouseX, mouseY, 40);
+//        	//bezierVertex(50, 140, 75, 140, 120, 120);
+//        	x.endShape();
+//    	}
+//	}
+	private void changeXY() {
+    	Integer floor = (int) Math.floor(Math.random() * 3);
+    	if (x1 > 0) {
+
+        	switch (floor) {
+
+            	case 0:
+                	x1 = x1++;
+            	case 1:
+                	y1++;
+            	case 2:
+                	y1 = y1 - 1;
+            	case 3:
+                	x1 = x1 - 1;
+
+        	}
+    	} else {
+        	x1=300;
+        	y1=200;
+    	}
+
+	}
+}
+
+
+
+//
+//Follow the JOGL installation instructions.
+//
+//Place the .dll files in your JAVA_HOME/jre/bin directory.
+//Place the jars in your JAVA_HOME/jre/lib/ext directory.
+//
+//Everything 'should' work then.

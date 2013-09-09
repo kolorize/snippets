@@ -1,0 +1,107 @@
+// Constructor and changing method
+
+function Ninja(name){
+  this.name = "John";
+   
+  // Should return true 
+  this.changeName = function(newName){ 
+    this.name = newName; 
+    return this.name; 
+  }; 
+}
+
+var ninja = new Ninja("John");
+assert( ninja.name == "John", "The name has been set on initialization" );
+
+ninja.changeName("Bob");
+assert( ninja.name == "Bob", "The name was successfully changed." );
+
+==========================================
+
+We need to make sure that the new operator is always used.
+
+==========================
+Using a variable number of arguments to our advantage.
+
+function merge(root){
+  for ( var i = 1; i < arguments.length; i++ )
+    for ( var key in arguments[i] )
+      root[key] = arguments[i][key];
+  return root;
+}
+
+var merged = merge({name: "John"}, {city: "Boston"});
+assert( merged.name == "John", "The original name is intact." );
+assert( merged.city == "Boston", "And the city has been copied over." );
+
+===========================================
+How can we find the Min/Max number in an array?
+
+function smallest(array){ 
+  return Math.min.apply( Math, array ); 
+} 
+function largest(array){ 
+  return Math.max.apply( Math, array ); 
+} 
+assert(smallest([0, 1, 2, 3]) == 0, "Locate the smallest value."); 
+assert(largest([0, 1, 2, 3]) == 3, "Locate the largest value.");
+
+
+OR
+
+function smallest(){ 
+  return Math.min.apply( Math, arguments ); 
+} 
+function largest(){ 
+  return Math.max.apply( Math, arguments ); 
+} 
+assert(smallest(0, 1, 2, 3) == 0, "Locate the smallest value."); 
+assert(largest(0, 1, 2, 3) == 3, "Locate the largest value.");
+
+============================================
+Convert Objects to Arrays
+
+function highest(){ 
+  return makeArray(arguments).sort(function(a,b){ 
+    return b - a; 
+  }); 
+} 
+ 
+function makeArray(array){ 
+  return Array().slice.call( array ); 
+} 
+ 
+assert(highest(1, 1, 2, 3)[0] == 3, "Get the highest value."); 
+assert(highest(3, 1, 2, 3, 4, 5)[1] == 4, "Verify the results.");
+
+============================================
+Implement a multiplication function (first argument by largest number).
+
+function multiMax(multi){ 
+  // Make an array of all but the first argument 
+  var allButFirst = Array().slice.call( arguments, 1 ); 
+ 
+  // Find the largest number in that array of arguments 
+  var largestAllButFirst = Math.max.apply( Math, allButFirst ); 
+ 
+  // Return the multiplied result 
+  return multi * largestAllButFirst; 
+} 
+assert( multiMax(3, 1, 2, 3) == 9, "3*3=9 (First arg, by largest.)" );
+
+
+============
+Timer
+
+var count = 0; 
+ 
+var timer = setInterval(function(){ 
+  if ( count < 5 ) { 
+    log( "Timer call: ", count ); 
+    count++; 
+  } else { 
+    assert( count == 5, "Count came via a closure, accessed each step." ); 
+    assert( timer, "The timer reference is also via a closure." ); 
+    clearInterval( timer ); 
+  } 
+}, 100);
