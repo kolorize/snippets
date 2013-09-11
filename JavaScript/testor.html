@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ready demo</title>
+  <style>p { color:gray; }	</style>
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script>
+  $(document).ready(function () {
+  $("p").text("The DOM is now loaded and can be manipulated.");
+  var baseUrl = 'http://www.gumtree.pl/fp-pokoje-do-wynajecia/';
+  var parentDiv = $(this).closest("div[id^=level]"); 
+  var district = "ursynow/c9000l3200020";
+  var urlParams = "?Sort=3&maxPrice=800&maxPriceBackend=80000&minPrice=300&minPriceBackend=30000&Page=";
+  var pages = 8;
+  for (var i=1;i<pages;i++)
+  { 
+    makeGet(baseUrl + district + urlParams + i);
+  }
+    
+  
+  function makeGet(getUrl, params, done, fail, always) {
+    //logger(new Trace("GET", getUrl, params));
+    $.ajax({
+      url: getUrl,
+      type: "GET",
+      dataType: "text",
+      async: false
+    })
+      .done(function (response) {
+        //$('#ResultsDiv').append(response);
+        
+        var gotcha = parseHTML(response, 'main');
+        if (response) {
+         // alert($(gotcha).html());
+         
+         try{
+             var tempGotcha=$(gotcha).html();
+             $('#ResultsDiv').append(
+               '<tr>'
+               $('<div>').html(tempGotcha).find('.srchrht')
+             );
+
+         }
+         catch(err){
+           //Handle errors here
+         }
+        }else{
+          alert('ID not found.');
+        }
+        
+        //parentDiv.after(response);
+      })
+      .fail(fail)
+      .always(always);
+  }
+  
+  
+  
+  //$(window.document.body).html($('.srchrht'));
+  function parseHTML(html, idStr) {
+    var root = document.createElement("div");
+    root.innerHTML = html;
+    // Get all child nodes of root div
+    var allChilds = root.childNodes;
+    for (var i = 0; i < allChilds.length; i++) {
+      if (allChilds[i].id && allChilds[i].id == idStr) {
+        return allChilds[i];
+      }
+    }
+    return false;
+  }
+});
+  </script>
+ 
+</head>
+<body>
+  <p>Not loaded yet.</p>
+  <div ><table id="ResultsDiv"></table>
+
+  </div>
+</body>
+</html>
