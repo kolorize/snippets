@@ -1,0 +1,43 @@
+Done
+
+Clean Code:
+- agree: 
+1. use meaningful names - very important for readability
+2. small functions doing one thing
+3. use arguments list - very nice way of passing parameters
+4. Noise Comments - comments that are no giving any new information
+5. HTML Comments - its hard to read
+6. horizontal formating - 120 lines
+7. Learning Tests Are Better Than Free
+8. Use Unchecked Exceptions
+9. Don’t Pass Null
+10. Classes Should Be Small - The Single Responsibility Principle
+
+dont agree:
+1. extract try/catch - creates a lot of time less readable code
+2.One Assert per Test - sometimes its better to check more conditions by assert 
+3. Dependency Injection (DI) - overused aproach, Spring XML is hard to debug
+4. Pure Java AOP Frameworks - not so usefull
+5. Tests Should Be Fast - more important is quality of test than speed
+
+
+Effective Java
+agree:
+1. Consider a builder when faced with many constructor parameters - very helpfull
+2. Enforce noninstantiability with a private constructor
+3. Avoid creating unnecessary objects
+4. Favor generic types/methods
+5. Minimize the accessibility of classes and members
+6. In public classes, use accessor methods, not public fields
+7. Minimize mutability
+8. Favor composition over inheritance
+9. Prefer interfaces to abstract classes
+10. Prefer lists to arrays
+
+
+dont agree: 
+1. Consider static factory methods instead of constructors
+2. Always override toString
+3. Use interfaces only to define types - properties files are better in most cases
+4. Use enums instead of int constants - less readable
+5. Consistently use the Override annotation - its forced by most IDEs, so we dont need to focus on that
