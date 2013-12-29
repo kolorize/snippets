@@ -11,7 +11,7 @@
  ps aux | grep jetty wszsysktie jetty
  killall mvn - zabija wszystkie mvn-owe procesy
  kill 939 - kills process 939 
- kill -9 939 - kills 939 process forced
+ sudo kill -9 939 - kills 939 process forced
 
  echo 'show schemas;' | mysql -uUSER -pPASSWORD -hSOME_mysql_server
 
